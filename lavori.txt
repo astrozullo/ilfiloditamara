@@ -1,0 +1,32 @@
+# IL FILO DI TAMARA - elenco dei lavori
+#
+# Una riga = un lavoro, scritta cosi':
+#     Nome del lavoro | Categoria | nome-foto.jpg
+# Se un lavoro ha piu' foto, separale con la virgola:
+#     Pochette gialla | Borse | pochette-gialla.jpg, pochette-gialla-interno.jpg
+#
+# - Le foto vanno caricate nella cartella "foto" (jpg, png o webp).
+# - I lavori compaiono sul sito nell'ordine di questo elenco: i nuovi mettili in alto.
+# - Le categorie si creano da sole: basta scriverle (es. Borse, Casa, Decorazioni).
+# - Per NASCONDERE un lavoro senza cancellarlo, metti # all'inizio della riga.
+# - Le righe che iniziano con # non compaiono sul sito.
+
+Borsa nera con catena argento | Borse | borsa-nera-con-catena-argento.webp
+Pochette senape con farfalla | Borse | pochette-senape-con-farfalla.webp, pochette-senape-con-farfalla-2.webp
+Borsa a mano beige | Borse | borsa-a-mano-beige.webp
+Secchiello blu, tortora e fucsia | Borse | secchiello-blu-tortora-e-fucsia.webp
+Pochette a busta rosa antico | Borse | pochette-a-busta-rosa-antico.webp
+Portacellulare blu con pesciolino | Borse | portacellulare-blu-con-pesciolino.webp
+Borsa verde lime | Borse | borsa-verde-lime.webp
+Pochette blu con farfalla | Borse | pochette-blu-con-farfalla.webp
+Pochette perla con catena | Borse | pochette-perla-con-catena.webp
+Pochette viola da polso | Borse | pochette-viola-da-polso.webp
+Pochette senape a trecce e borsa azzurra | Borse | pochette-senape-a-trecce-e-borsa-azzurra.webp
+Pochette viola con V bianca e borsa rosa | Borse | pochette-viola-con-v-bianca-e-borsa-rosa.webp
+Borsa a sacca azzurra | Borse | borsa-a-sacca-azzurra.webp
+Tracolline per bimbe | Per le bimbe | tracolline-per-bimbe.webp
+Scaldacollo cipria con bottoni | Accessori | scaldacollo-cipria-con-bottoni.webp
+Vassoio con manici | Casa | vassoio-con-manici.webp
+Cestino rotondo | Casa | cestino-rotondo.webp
+Cestino blu e oro con fiocco | Casa | cestino-blu-e-oro-con-fiocco.webp
+Pallina decorativa verde e oro | Decorazioni | pallina-decorativa-verde-e-oro.webp
