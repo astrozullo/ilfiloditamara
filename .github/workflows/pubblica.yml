@@ -1,0 +1,43 @@
+# Pubblica il sito a ogni modifica e crea le anteprime per WhatsApp.
+# Non va toccato: basta modificare lavori.txt e la cartella foto.
+name: Pubblica il sito
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - id: pages
+        uses: actions/configure-pages@v5
+      - name: Prepara il sito e le anteprime
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --quiet pillow==12.3.0
+          .venv/bin/python tools/genera.py --base "${{ steps.pages.outputs.base_url }}" --out _site
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

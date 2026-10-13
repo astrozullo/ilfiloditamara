@@ -11,3 +11,10 @@ Galleria dei lavori all'uncinetto di Tamara.
 
 Attenzione: il nome della foto in `lavori.txt` deve essere identico al file,
 maiuscole comprese (`Borsa.JPG` e `borsa.jpg` sono due file diversi).
+
+## Anteprime su WhatsApp
+
+Quando qualcuno preme «Chiedi info», il messaggio contiene il link al lavoro
+e WhatsApp mostra l'anteprima con la foto. Le anteprime le crea GitHub da solo
+a ogni modifica (cartelle `tools` e `.github`: non vanno toccate).
+Impostazione richiesta, una volta sola: **Settings → Pages → Source: GitHub Actions**.
