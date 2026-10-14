@@ -24,7 +24,17 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body)}
 .wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:0 48px}
 /* riga "a punto": come la cucitura sulla borsa nera */
 .stitch{height:6px;background:repeating-linear-gradient(90deg,var(--accent) 0 14px,transparent 14px 24px);border-radius:3px;opacity:.55}
-header{padding-block:48px 28px;display:grid;gap:14px}
+header{padding-block:48px 28px;display:grid;gap:24px;align-items:center}
+header .testa{display:grid;gap:14px}
+/* vetrina: le prime 3 borse della galleria, subito visibili */
+.vetrina{display:flex;justify-content:center;align-items:flex-end;background:var(--accent-soft);border-radius:18px;padding:clamp(16px,3vw,32px) clamp(12px,2vw,24px)}
+.vetrina button{all:unset;cursor:zoom-in;flex:0 1 38%;min-width:0;margin-inline:-2.5%;display:flex;justify-content:center;position:relative}
+.vetrina button:nth-child(2){z-index:1}
+.vetrina img{max-width:100%;max-height:clamp(130px,24vw,280px);object-fit:contain;filter:drop-shadow(0 10px 14px rgba(60,20,40,.28));transition:transform .4s ease}
+.vetrina button:nth-child(2) img{max-height:clamp(150px,28vw,320px)}
+.vetrina button:hover img{transform:translateY(-4px) scale(1.03)}
+.vetrina button:focus-visible{outline:3px solid var(--blue);outline-offset:4px;border-radius:8px}
+@media (min-width:880px){header{grid-template-columns:1.05fr 1fr}}
 .eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(4rem,13vw,7rem);line-height:.9;margin:0;text-wrap:balance}
 h1 span{color:var(--accent)}
@@ -86,10 +96,13 @@ footer{margin-top:48px;padding-top:18px;font-size:.85rem;color:var(--muted);disp
 
 <div class="wrap">
   <header>
+    <div class="testa">
     <div class="eyebrow">Uncinetto fatto a mano</div>
     <h1>Il Filo<br>di <span>Tamara</span></h1>
     <p class="lead">Borse, pochette, cestini e piccole decorazioni lavorate all'uncinetto, un punto alla volta. Questa è la mia galleria: una raccolta di lavori fatti per passione, ognuno diverso dall'altro.</p>
     <div class="patto"><span>Fatto a mano</span><span>Ogni pezzo diverso</span><span>Per passione</span></div>
+    </div>
+    <div class="vetrina" id="vetrina" aria-label="Alcuni lavori"></div>
   </header>
 
   <section class="motto" aria-label="La galleria">
@@ -171,6 +184,11 @@ function disegnaFiltri(){
   cats.forEach(c=>{const b=document.createElement('button');b.type="button";b.textContent=c;
     b.setAttribute('aria-pressed',c===attivo);b.onclick=()=>{attivo=c;disegnaFiltri();disegna();};filtri.appendChild(b);});
 }
+function disegnaVetrina(){
+  const v=document.getElementById('vetrina');v.innerHTML="";
+  PEZZI.slice(0,3).forEach(p=>{const b=document.createElement('button');b.type="button";b.setAttribute('aria-label',"Guarda "+p.nome);
+    b.innerHTML=`<img src="${encodeURI(CARTELLA+copertina(p))}" alt="${p.nome}">`;b.onclick=()=>apri(p,inizio(p));v.appendChild(b);});
+}
 function disegna(){
   griglia.innerHTML="";
   PEZZI.filter(p=>attivo==="Tutto"||p.cat===attivo).forEach(p=>{
@@ -217,7 +235,7 @@ function leggiElenco(t){
   }).filter(p=>p.nome&&copertina(p));
 }
 fetch("lavori.txt",{cache:"no-cache"}).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{
-  PEZZI=leggiElenco(t);cats=["Tutto",...new Set(PEZZI.map(p=>p.cat))];disegnaFiltri();disegna();
+  PEZZI=leggiElenco(t);cats=["Tutto",...new Set(PEZZI.map(p=>p.cat))];disegnaFiltri();disegna();disegnaVetrina();
   const h=decodeURIComponent(location.hash.slice(1)),pz=h&&PEZZI.find(p=>codice(copertina(p))===h);
   if(pz){document.getElementById(h).scrollIntoView({block:"center"});apri(pz,inizio(pz));}
 }).catch(()=>{griglia.innerHTML='<p class="nota">Non riesco a leggere l\'elenco dei lavori (lavori.txt). Se stai aprendo il file dal computer, prova dal sito online.</p>';});
