@@ -11,7 +11,7 @@
 # - Per NASCONDERE un lavoro senza cancellarlo, metti # all'inizio della riga.
 # - Le righe che iniziano con # non compaiono sul sito.
 
-Borsa etnica | Borse | borsa-etnica.webp
+Borsa etnica verde bottiglia | Borse | borsa-etnica.webp
 Borsa nera con catena argento | Borse | borsa-nera-con-catena-argento.webp
 Pochette senape con farfalla | Borse | pochette-senape-con-farfalla.webp, pochette-senape-con-farfalla-2.webp
 Borsa a mano beige | Borse | borsa-a-mano-beige.webp
