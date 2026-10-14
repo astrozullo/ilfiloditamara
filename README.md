@@ -9,6 +9,10 @@ Galleria dei lavori all'uncinetto di Tamara.
    `Nome del lavoro | Categoria | nome-foto.jpg` → **Commit changes**.
 3. Dopo 1-2 minuti il sito è aggiornato.
 
+Per un video (mp4): caricalo nella cartella `foto` e scrivilo dopo la foto di
+copertina, per esempio `Borsa verde | Borse | borsa-verde.jpg, borsa-verde.mp4`.
+Dal sito di GitHub si caricano file fino a 25 MB.
+
 Attenzione: il nome della foto in `lavori.txt` deve essere identico al file,
 maiuscole comprese (`Borsa.JPG` e `borsa.jpg` sono due file diversi).
 

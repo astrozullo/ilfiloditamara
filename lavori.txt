@@ -6,11 +6,16 @@
 #     Pochette gialla | Borse | pochette-gialla.jpg, pochette-gialla-interno.jpg
 #
 # - Le foto vanno caricate nella cartella "foto" (jpg, png o webp).
+# - Si puo' aggiungere anche un VIDEO (mp4): caricalo nella cartella "foto"
+#   e scrivilo DOPO la foto, che fa da copertina. Aprendo il lavoro parte il video:
+#     Borsa verde | Borse | borsa-verde.jpg, borsa-verde.mp4
+#   Dal sito di GitHub si caricano file fino a 25 MB.
 # - I lavori compaiono sul sito nell'ordine di questo elenco: i nuovi mettili in alto.
 # - Le categorie si creano da sole: basta scriverle (es. Borse, Casa, Decorazioni).
 # - Per NASCONDERE un lavoro senza cancellarlo, metti # all'inizio della riga.
 # - Le righe che iniziano con # non compaiono sul sito.
 
+Borsa a spalla verde oliva | Borse | borsa-a-spalla-verde-oliva.webp, borsa-a-spalla-verde-oliva.mp4
 Borsa etnica verde bottiglia | Borse | borsa-etnica.webp
 Borsa nera con catena argento | Borse | borsa-nera-con-catena-argento.webp
 Pochette senape con farfalla | Borse | pochette-senape-con-farfalla.webp, pochette-senape-con-farfalla-2.webp

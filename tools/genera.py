@@ -6,7 +6,7 @@ in lavori.txt, crea:
   - og/<codice>.jpg   immagine di anteprima 1200x630 (quella che WhatsApp mostra)
   - p/<codice>.html   piccola pagina con i dati per l'anteprima, che rimanda al sito
 
-Il <codice> e' il nome della prima foto del lavoro, senza estensione.
+Il <codice> e' il nome della prima foto del lavoro (i video si saltano), senza estensione.
 Questo script lo esegue GitHub da solo a ogni modifica: non serve lanciarlo a mano.
 """
 import argparse
@@ -21,6 +21,12 @@ from PIL import Image, ImageOps
 FONDO = (243, 220, 228)          # rosa chiaro del sito
 LARGH, ALT = 1200, 630           # formato standard delle anteprime dei link
 COPIA = ["index.html", "lavori.txt", "foto", "licenze-caratteri"]
+VIDEO = (".mp4", ".webm", ".mov")
+
+
+def copertina(lavoro):
+    """La prima foto del lavoro: un video non puo' fare da copertina."""
+    return next((f for f in lavoro["foto"] if not f.lower().endswith(VIDEO)), None)
 
 
 def codice(nome_foto: str) -> str:
@@ -102,11 +108,15 @@ def main():
     lavori = leggi_lavori((src / "lavori.txt").read_text(encoding="utf-8"))
     fatti = 0
     for l in lavori:
-        foto = src / "foto" / l["foto"][0]
+        cop = copertina(l)
+        if cop is None:
+            print(f"ATTENZIONE: '{l['nome']}' ha solo video e nessuna foto di copertina, non compare sul sito", file=sys.stderr)
+            continue
+        foto = src / "foto" / cop
         if not foto.exists():
             print(f"ATTENZIONE: manca la foto {foto.name} per '{l['nome']}', salto l'anteprima", file=sys.stderr)
             continue
-        cod = codice(l["foto"][0])
+        cod = codice(cop)
         anteprima(foto, out / "og" / f"{cod}.jpg")
         e = html.escape
         (out / "p" / f"{cod}.html").write_text(PAGINA.format(
