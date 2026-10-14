@@ -109,9 +109,13 @@ def anteprima_sito(foto, dst: Path, testo_html: str):
         im = ImageOps.exif_transpose(Image.open(f)).convert("RGBA")
         im.thumbnail((cella - 40, alto))
         x, y = 20 + i * cella + (cella - im.width) // 2, cima + (alto - im.height) // 2
-        ombra = Image.new("RGBA", im.size, (60, 20, 40, 0))
-        ombra.putalpha(im.getchannel("A").point(lambda v: v * 55 // 255))
-        tela.alpha_composite(ombra.filter(ImageFilter.GaussianBlur(9)), (x, min(y + 10, ALT - im.height)))
+        m = 30          # margine: la sfumatura dell'ombra non deve essere tagliata ai bordi della foto
+        alfa = Image.new("L", (im.width + 2 * m, im.height + 2 * m), 0)
+        alfa.paste(im.getchannel("A").point(lambda v: v * 55 // 255), (m, m))
+        ombra = Image.new("RGBA", alfa.size, (60, 20, 40, 0))
+        ombra.putalpha(alfa)
+        ombra = ombra.filter(ImageFilter.GaussianBlur(9))
+        tela.alpha_composite(ombra, dest=(max(0, x - m), y + 10 - m), source=(max(0, m - x), 0))
         tela.alpha_composite(im, (x, y))
     tela.convert("RGB").save(dst, "JPEG", quality=84, optimize=True, progressive=True)
 
