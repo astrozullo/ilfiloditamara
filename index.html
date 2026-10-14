@@ -154,7 +154,7 @@ let PEZZI = [];   // i lavori si scrivono nel file lavori.txt, non qui
 const CARTELLA = "foto/";
 const WHATSAPP = "393386342740"; // numero con prefisso 39, senza + e spazi
 const codice = f => f.replace(/\.[^.]+$/,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
-const eVideo = f => /\.(mp4|webm|mov)$/i.test(f);
+const eVideo = f => /\.(mp4|webm|mov)(\?|$)/i.test(f);   // sul sito i nomi hanno in coda ?v=... (vedi tools/genera.py)
 // copertina: la prima foto del lavoro (un video non fa da copertina); aprendo il lavoro parte il video, se c'e'
 const copertina = p => p.foto.find(f=>!eVideo(f));
 const inizio = p => Math.max(p.foto.findIndex(eVideo),0);

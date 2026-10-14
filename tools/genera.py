@@ -10,6 +10,7 @@ Il <codice> e' il nome della prima foto del lavoro (i video si saltano), senza e
 Questo script lo esegue GitHub da solo a ogni modifica: non serve lanciarlo a mano.
 """
 import argparse
+import hashlib
 import html
 import re
 import shutil
@@ -47,6 +48,25 @@ def leggi_lavori(testo: str):
         if nome and foto:
             lavori.append({"nome": nome, "cat": cat, "foto": foto})
     return lavori
+
+
+def versiona(testo: str, cartella: Path) -> str:
+    """Aggiunge ?v=<impronta del file> ai nomi delle foto e dei video in lavori.txt.
+
+    Se una foto viene sostituita tenendo lo stesso nome, cambia l'impronta e quindi
+    l'indirizzo: il browser la riscarica invece di mostrare quella vecchia in memoria.
+    """
+    righe = []
+    for riga in testo.splitlines():
+        if riga.strip() and not riga.strip().startswith("#") and riga.count("|") >= 2:
+            parti = riga.split("|")
+            nomi = [n.strip() for n in parti[2].split(",") if n.strip()]
+            parti[2] = " " + ", ".join(
+                f"{n}?v={hashlib.sha1((cartella / n).read_bytes()).hexdigest()[:10]}" if (cartella / n).is_file() else n
+                for n in nomi)
+            riga = "|".join(parti)
+        righe.append(riga)
+    return "\n".join(righe) + "\n"
 
 
 def anteprima(src: Path, dst: Path):
@@ -102,6 +122,7 @@ def main():
             shutil.copytree(p, out / nome)
         elif p.exists():
             shutil.copy2(p, out / nome)
+    (out / "lavori.txt").write_text(versiona((src / "lavori.txt").read_text(encoding="utf-8"), src / "foto"), encoding="utf-8")
 
     (out / "og").mkdir()
     (out / "p").mkdir()
