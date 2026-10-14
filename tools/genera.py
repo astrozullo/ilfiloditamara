@@ -111,7 +111,7 @@ def main():
         e = html.escape
         (out / "p" / f"{cod}.html").write_text(PAGINA.format(
             titolo=e(f"{l['nome']} · Il Filo di Tamara"),
-            desc=e(f"{l['cat']} all'uncinetto, fatto a mano da Tamara."),
+            desc=e("Fatto a mano all'uncinetto da Tamara."),
             img=e(f"{sito}og/{cod}.jpg"), url=e(f"{sito}p/{cod}.html"),
             sito=e(sito), cod=cod, nome=e(l["nome"])), encoding="utf-8")
         fatti += 1
