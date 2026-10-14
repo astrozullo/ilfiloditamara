@@ -51,10 +51,12 @@ def leggi_lavori(testo: str):
 
 
 def versiona(testo: str, cartella: Path) -> str:
-    """Aggiunge ?v=<impronta del file> ai nomi delle foto e dei video in lavori.txt.
+    """Aggiunge ?v=<impronta del file> ai nomi delle foto in lavori.txt.
 
     Se una foto viene sostituita tenendo lo stesso nome, cambia l'impronta e quindi
     l'indirizzo: il browser la riscarica invece di mostrare quella vecchia in memoria.
+    I video restano senza: le pagine rimaste in memoria nei browser riconoscono un
+    video solo se il nome finisce con .mp4 (o .webm, .mov).
     """
     righe = []
     for riga in testo.splitlines():
@@ -62,7 +64,7 @@ def versiona(testo: str, cartella: Path) -> str:
             parti = riga.split("|")
             nomi = [n.strip() for n in parti[2].split(",") if n.strip()]
             parti[2] = " " + ", ".join(
-                f"{n}?v={hashlib.sha1((cartella / n).read_bytes()).hexdigest()[:10]}" if (cartella / n).is_file() else n
+                f"{n}?v={hashlib.sha1((cartella / n).read_bytes()).hexdigest()[:10]}" if (cartella / n).is_file() and not n.lower().endswith(VIDEO) else n
                 for n in nomi)
             riga = "|".join(parti)
         righe.append(riga)
